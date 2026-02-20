@@ -2,13 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import leadsRoutes from './routes/leads.routes.js';
 import reportsRoutes from './routes/reports.routes.js';
+import vapiWebhookRoutes from './routes/vapiWebhook.js';
 import ragService from './services/rag.service.js';
 import { ChatGroq } from '@langchain/groq';
 import { errorHandler } from './utils/errorHandler.js';
 import { logger } from './utils/logger.js';
 
 const app = express();
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -100,6 +100,7 @@ app.get('/health/detailed', async (req, res) => {
 });
 
 // Routes
+app.use('/api', vapiWebhookRoutes);
 app.use('/api', leadsRoutes);
 app.use('/api', reportsRoutes);
 

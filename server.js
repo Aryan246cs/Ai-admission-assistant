@@ -11,8 +11,10 @@ const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
-    // Connect to MongoDB
-    await connectDB();
+    // Connect to MongoDB (non-blocking)
+    connectDB().catch(err => {
+      logger.error('MongoDB connection failed, but server will continue');
+    });
 
     // Initialize ChromaDB
     try {
